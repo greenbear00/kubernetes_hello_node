@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment # ReplicaSet보다는 deployment를 사용, 이유는 port 충돌 방지
+metadata:
+  name: hello-node  # 동일한 namespace 상에서 유니크한 값
+spec:
+  selector: # 어떤 pod를 대상으로 replicaset을 만들것인가 지정(즉, matchLabels과 동일함.)
+    matchLabels:
+      run: hello-node # 위에 labels와 동일한거 적음
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: hello-node
+    spec:
+      containers:
+      - name: hello-node
+        image: hello-node:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+  # nodeSelector:
+  #   disktype: ssd
+
+# $ kubectl apply -f [파일명]

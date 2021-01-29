@@ -1,0 +1,15 @@
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: hello-node
+  labels:
+    run: hello-node
+spec: 
+  type: NodePort
+  ports: 
+  - port: 8080 
+    protocol: TCP 
+    targetPort: 8080  # service를 80 포트로 열고, 이를 8080으로 포트 포워딩
+  selector: 
+    run: hello-node # pod를 deployment로 배포한 것에 대한 실제 pod와 맵핑시킴
+  
